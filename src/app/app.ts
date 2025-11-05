@@ -7,5 +7,5 @@ import { Component, signal } from '@angular/core';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Angular20TasksClientCrud2');
+  protected readonly title = signal('Angular 20 Tasks Client Crud');
 }

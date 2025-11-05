@@ -1,0 +1,91 @@
+@if (viewMode){
+
+@if (currentTask.taskId){
+<div style="text-align: left;">
+	<p>task-details works!</p>
+</div>
+
+<div>
+	<h5>Task ID: {{ currentTask.taskId }}</h5>
+	<label><strong>Title:</strong></label> {{currentTask.taskTitle }}
+</div>
+<div>
+	<label><strong>Description:</strong></label>
+	{{ currentTask.taskDescription }}
+</div>
+<div>
+	<label><strong>Status:</strong></label>
+	{{ currentTask.taskStatus ? currentTask.taskStatus : "Pending" }}
+</div>
+<a class="button buttonEdit" routerLink="/tasks/{{currentTask.taskId }}">
+	Edit
+</a>
+
+} @else {
+<div style="text-align: left;">
+	<p>Please click on a Task...</p>
+</div>
+
+}
+
+
+} @else {
+
+@if (this.showEdit && this.currentTask.taskId) {
+<div class="edit-form">
+	<h5>Task ID: {{ currentTask.taskId }}</h5>
+	<form>
+		<div class="form-group">
+			<label for="title"><strong>Title:</strong></label>
+			<input type="text" class="form-control" id="title" [(ngModel)]="currentTask.taskTitle" name="title" />
+		</div>
+		<div class="form-group">
+			<label for="description"><strong>Description:</strong></label>
+			<input type="text" class="form-control" id="description" [(ngModel)]="currentTask.taskDescription"
+				name="description" />
+		</div>
+
+		<div class="form-group">
+			<label><strong>Status:</strong></label>
+			<!-- 
+			{{ currentTask.taskStatus ? currentTask.taskStatus : "Pending" }}
+			-->
+			<input type="text" class="form-control" id="status" [(ngModel)]="currentTask.taskStatus" name="status" />
+		</div>
+
+	</form>
+
+	@if (currentTask.taskStatus == 'Published') {
+	<button class="button buttonUnPublish" (click)="updateStatus('Pending')">
+		UnPublish
+	</button>
+	} @else if(currentTask.taskStatus == 'Pending') {
+	<button class="button buttonPublish" (click)="updateStatus('Published')">
+		Publish
+	</button>
+	} @else if(currentTask.taskStatus !== 'Pending' && currentTask.taskStatus !== 'Published') {
+	<button class="button buttonPublish" (click)="updateStatus('')">
+		Edit
+	</button>
+	}
+
+	<button class="button buttonDelete" (click)="deleteTask()">
+		Delete
+	</button>
+
+	<button type="submit" class="button buttonUpdate" (click)="updateTask()">
+		Update
+	</button>
+	<p>{{ message }}</p>
+</div>
+
+
+} @else {
+
+<div style="text-align: center;">
+	<p>Cannot access this Task...</p>
+</div>
+
+}
+
+}

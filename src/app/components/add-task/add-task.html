@@ -1,0 +1,38 @@
+<div style="text-align: center;">
+	<p>add-task works!</p>
+</div>
+
+<div>
+  <div class="submit-form">
+    @if (!submitted) {
+	    <div class="form-group">
+	      <label for="title">Title:</label>
+	      <input
+	        type="text"
+	        class="form-control"
+	        id="title"
+	        required
+	        [(ngModel)]="task.taskTitle"
+	        name="title"
+	      />
+	    </div>
+	
+	    <div class="form-group">
+	      <label for="description">Description:</label>
+	      <input
+	        class="form-control"
+	        id="description"
+	        required
+	        [(ngModel)]="task.taskDescription"
+	        name="description"
+	      />
+	    </div>
+	    <br>
+	    <button (click)="saveTask()" class="btn btn-success">Submit</button>
+		
+    } @else {
+	    <h4>Task was submitted successfully!</h4>
+	    <button class="btn btn-success" (click)="newTask()">Add New Task</button>
+    }
+  </div>
+</div>

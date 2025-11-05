@@ -1,0 +1,124 @@
+<div class="list row">
+	<div style="text-align: left;">
+		<p>task-list works!</p>
+	</div>
+
+	<div class="col-md-8">
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="title" />
+			<div class="input-group-append">
+
+				<button class="btn btn-outline-secondary" type="button" (click)="searchTitlePages()">
+					Search
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<h4>Tasks List</h4>
+		@if (loading){
+			{{ message }}
+		}
+
+		@if(error){
+			{{ message }}
+		}
+
+		<div *ngIf="show">
+
+			<div *ngIf="!loading && !error && tasks.length === 0">
+				No taks available.
+			</div>
+
+			<div class="task-list-container">
+
+				<!-- Tasks table -->
+				<div class="table-container">
+					<table class="tasks-table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Title</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="task-row" *ngFor="let t of tasks; let i = index; trackBy: trackByFn"
+								[ngClass]="{'task-row-highlight': selectedRow === i}" (click)="selectRow(i, $event)">
+
+								<td class="task-id" [class.active]="i == currentIndex" (click)="setActiveTask(t, i)">
+
+									{{ t.taskId }}
+
+
+								</td>
+
+								<td class="task-title" [class.active]="i == currentIndex" (click)="setActiveTask(t, i)">
+									{{ t.taskTitle }}
+
+
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<!-- Show empty state if no tasks -->
+					<div *ngIf="tasks.length === 0" class="empty-state">
+						<div class="empty-icon">👥</div>
+						<h3>No tasks found</h3>
+						<p>There are no tasks to display at the moment.</p>
+					</div>
+				</div>
+
+
+				<!-- Pagination -->
+				<div class="pagination-controls" (click)="clearSelection($event)">
+					<button class="pagination-btn" (click)="goToPage(0)"
+						[disabled]="currentPage === 0">First</button>&nbsp;
+					<button class="pagination-btn" (click)="previousPage()"
+						[disabled]="currentPage === 0">Prev</button>&nbsp;
+					<button *ngFor="let page of getVisiblePages()" class="pagination-btn page-number"
+						[class.active]="(page) === currentPage" (click)="goToPage(page)"> {{ page + 1 }} </button>&nbsp;
+					<button class="pagination-btn" (click)="nextPage()"
+						[disabled]="currentPage === totalPages - 1">Next</button>&nbsp;
+					<button class="pagination-btn" (click)="goToPage(totalPages - 1)"
+						[disabled]="currentPage === totalPages - 1">Last</button>
+				</div>
+
+				<div class="page-size-selector" (click)="clearSelection($event)">
+					Total Items: {{this.totalItems}}
+					<span>Page: {{ currentPage + 1 }}/{{ totalPages }}</span>&nbsp;
+					<label for="pageSize">Items per page:</label>
+					<select id="pageSize" (change)="changePageSize($any($event.target).value)" class="page-size-select">
+						<option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === itemsPerPage">
+							{{size}} </option>
+					</select>
+
+					<label for="pageNo">Go to page:</label>
+					<select id="pageNo" (change)="goToPage($any($event.target).value)" class="page-size-select">
+						<option *ngFor="let page of pageNumbers" [value]="page" [selected]="page === currentPage">{{
+							page + 1 }}</option>
+					</select>
+				</div>
+
+				<!-- Remove All Tasks
+				<button class="m-3 btn btn-sm btn-danger" (click)="removeAllTasks()">
+					Remove All
+				</button>
+				-->
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<!-- Notes: Set 'viewMode' to true the display task is not editable.-->
+	<div class="col-md-6">
+		<app-task-details [viewMode]="true" [currentTask]="currentTask"></app-task-details>
+	</div>
+</div>
+
+<router-outlet />
