@@ -4,6 +4,10 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 An Angular 20 example project demonstrating a CRUD application that consumes a REST API to display, modify, and search data using HttpClient, Forms, and the Angular Router.
 
+Author: Tommy Duong 
+<br>
+Contact: tommy.duong.kc@gmail.com
+
 ## Development server
 
 To start a local development server, run:

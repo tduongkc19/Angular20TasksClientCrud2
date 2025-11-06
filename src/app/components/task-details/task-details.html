@@ -1,3 +1,21 @@
+<!--
+	Common task statuses:
+	Not Started: The task has not yet been initiated.
+	In Progress: The task is currently being worked on.
+	Completed: The task has been finished and signed off as correct. 
+	
+	Other possible statuses:
+	In Review: The work is complete and is awaiting approval or review.
+	On Hold: Work on the task has been temporarily suspended.
+	Blocked: Obstacles are preventing the task from moving forward.
+	Closed: The task is finalized and the project is complete.
+	Draft: A preliminary status used when a task hasn't been officially assigned yet.
+	Declined: The assignee did not accept the task.
+	Accepted: The assignee has confirmed they will complete the task.
+	Rejected: The task was not accepted after review.
+	Reopened: A previously completed or closed task that needs to be addressed again. 	
+-->
+
 @if (viewMode){
 
 @if (currentTask.taskId){
@@ -55,18 +73,18 @@
 
 	</form>
 
-	@if (currentTask.taskStatus == 'Published') {
-	<button class="button buttonUnPublish" (click)="updateStatus('Pending')">
-		UnPublish
-	</button>
-	} @else if(currentTask.taskStatus == 'Pending') {
-	<button class="button buttonPublish" (click)="updateStatus('Published')">
-		Publish
-	</button>
-	} @else if(currentTask.taskStatus !== 'Pending' && currentTask.taskStatus !== 'Published') {
-	<button class="button buttonPublish" (click)="updateStatus('')">
-		Edit
-	</button>
+	@if (currentTask.taskStatus == '') {
+		<button class="button buttonUnPublish" (click)="updateStatus()">
+			Update Status
+		</button>
+	} @else if(currentTask.taskStatus == 'Pending' || currentTask.taskStatus == 'Not Started') {
+		<button class="button buttonPublish" (click)="assignTask()">
+			Assign Task
+		</button>
+	} @else {
+		<button class="button buttonPublish" (click)="updateStatus()">
+			Change Status
+		</button>
 	}
 
 	<button class="button buttonDelete" (click)="deleteTask()">

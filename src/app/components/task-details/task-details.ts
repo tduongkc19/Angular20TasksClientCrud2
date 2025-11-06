@@ -26,6 +26,7 @@ export class TaskDetails implements OnInit {
 	//default state is not to show at start.
 	showEdit = false;
 	dataSubject = new BehaviorSubject<any>(null);
+	currentStatus: String ='';
 
 	@Input() viewMode = false;
 
@@ -77,12 +78,15 @@ export class TaskDetails implements OnInit {
 		this.dataSubject.next(this.currentTask);
 	}
 
-	updateStatus(status: string): void {
-		console.log("task-details.updateStatus().execution started...status: ", status);
+	// Update task status & task.
+	updateStatus(): void {
+		console.log("task-details.updateStatus().execution started...status: ", this.currentTask.taskStatus);
+		this.currentStatus = this.currentTask.taskStatus || 'Pending';
+
 		const data = {
-			taskTitle: this.currentTask.taskTitle,
-			taskDescription: this.currentTask.taskDescription,
-			taskStatus: status
+			taskTitle:this.currentTask.taskTitle,
+			taskDescription:this.currentTask.taskDescription,
+			taskStatus:this.currentStatus
 		};
 
 		this.message = '';
@@ -91,7 +95,7 @@ export class TaskDetails implements OnInit {
 			.subscribe({
 				next: (res) => {
 					console.log(res);
-					this.currentTask.taskStatus = status;
+					this.currentTask.taskStatus = res.taskStatus;
 					this.message = res.message ? res.message : 'The status was updated successfully!';
 					this.cdf.detectChanges();
 					this.cdf.markForCheck();
@@ -99,6 +103,12 @@ export class TaskDetails implements OnInit {
 				error: (e) => console.log("task-details.updateStatus()...error: ",
 								this.message = 'Task not found...This task has been deleted!' , e)
 			});
+	}
+	
+	// Assigns a task to a specific user.
+	assignTask(): void {
+		console.log("task-details.assignTask().execution started...");
+		this.updateStatus();
 	}
 
 	updateTask(): void {
