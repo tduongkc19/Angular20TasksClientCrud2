@@ -47,16 +47,11 @@
 								[ngClass]="{'task-row-highlight': selectedRow === i}" (click)="selectRow(i, $event)">
 
 								<td class="task-id" [class.active]="i == currentIndex" (click)="setActiveTask(t, i)">
-
 									{{ t.taskId }}
-									{{currentIndex}}
-
 								</td>
 
 								<td class="task-title" [class.active]="i == currentIndex" (click)="setActiveTask(t, i)">
 									{{ t.taskTitle }}
-
-
 								</td>
 							</tr>
 
