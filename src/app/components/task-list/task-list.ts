@@ -255,4 +255,8 @@ export class TaskList implements OnInit {
 	trackByFn(index: number, item: any): number {
 		return item.id; // Unique identifier
 	}
+	
+	trackByUniqueId(index: number, item: any): string {
+	  return `${item.id}-${index}`; // Unique identifier
+	}
 }

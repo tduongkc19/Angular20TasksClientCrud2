@@ -43,13 +43,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="task-row" *ngFor="let t of tasks; let i = index; trackBy: trackByFn"
+							<tr class="task-row" *ngFor="let t of tasks; let i = index; trackBy: trackByUniqueId"
 								[ngClass]="{'task-row-highlight': selectedRow === i}" (click)="selectRow(i, $event)">
 
 								<td class="task-id" [class.active]="i == currentIndex" (click)="setActiveTask(t, i)">
 
 									{{ t.taskId }}
-
+									{{currentIndex}}
 
 								</td>
 
